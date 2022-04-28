@@ -1,34 +1,22 @@
 import React from 'react'
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import StyledText from './StyledText';
+import RepositoryStats from './RepositoryStats'
+import theme from '../theme';
 
-const RepositoryStats = props =>(
-    <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-        <View>
-            <StyledText fontWeight='bold'>Stars:</StyledText>
-            <StyledText> {props.stargazersCount}</StyledText>
-        </View>
-        <View>
-            <StyledText fontWeight='bold'>Forks:</StyledText>
-            <StyledText>{props.forksCount}</StyledText>
-        </View>
-        
-        <View>
-            <StyledText fontWeight='bold'>Rating:</StyledText>
-            <StyledText>{props.ratingAverage}</StyledText>
-        </View>
-        <View>
-            <StyledText fontWeight='bold'>Review: </StyledText>
-            <StyledText>{props.reviewCount}</StyledText>
-        </View>
+const RepositoryItemHeader = ({ownerAvatarurl, fullName, description, language}) => (
+    <View>
+        <Image style={styles.image} source={{uri: ownerAvatarurl}}/>
+        <StyledText fontSize='subheading' fontWeight='bold' > FullName: {fullName}
+        </StyledText>
+        <StyledText > Description: {description}</StyledText>
+        <StyledText style={styles.language}> Language: {language}</StyledText>
     </View>
 )
 
 const RepositoryItem = (props) => (
             <View key={props.id} style={styles.container}>
-                <StyledText fontSize='subheading' fontWeight='bold' > FullName: {props.fullName}</StyledText>
-                <StyledText > Description: {props.description}</StyledText>
-                <StyledText  > Language: {props.language}</StyledText>
+                <RepositoryItemHeader {...props}/>
                 <RepositoryStats {...props} />
                 </View>
 )
@@ -39,10 +27,20 @@ const styles = StyleSheet.create({
         paddingBottom:5,
         paddingTop: 5,
     },
-    id: {
-        fontWeight: 'bold',
-        marginBottom: 5,
+    language: {
+        padding: 4,
+        color: theme.colors.white,
+        backgroundColor: theme.colors.primary,
+        alignSelf: 'flex-start',
+        borderRadius: 4,
+        overflow: 'hidden'
+    },
+    image: {
+        width: 48,
+        height: 48,
+        borderRadius: 4,
     }
 })
 
 export default RepositoryItem
+  
